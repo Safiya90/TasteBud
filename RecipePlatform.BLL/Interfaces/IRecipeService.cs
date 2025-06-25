@@ -10,6 +10,8 @@ namespace RecipePlatform.BLL.Interfaces
     public interface IRecipeService
     {
         Task AddRecipeAsync(Recipe recipe);
+        Task<IEnumerable<Recipe>> GetAllRecipesAsync();
         Task<IEnumerable<Recipe>> GetUserRecipesAsync(string userId);
+        Task<Recipe> GetByIdAsync(int id);
     }
 }

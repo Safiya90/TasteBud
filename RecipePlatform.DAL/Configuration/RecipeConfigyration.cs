@@ -24,6 +24,16 @@ namespace RecipePlatform.DAL.Configuration
             builder.Property(r => r.CreatedDate)
                 .HasDefaultValueSql("GETDATE()");
 
+            builder.HasMany(r => r.Ingredients)
+               .WithOne(i => i.Recipe)
+               .HasForeignKey(i => i.RecipeId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(r => r.Instructions)
+                   .WithOne(ins => ins.Recipe)
+                   .HasForeignKey(ins => ins.RecipeId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

@@ -42,5 +42,64 @@
         <select asp-for="CategoryId" class="form-select" asp-items="Model.Categories"></select>
     </div>
 
+    <div class="mb-3">
+        <label class="form-label">Ingredients</label>
+        <div id="ingredient-list">
+            @if (Model.Ingredient != null && Model.Ingredient.Any())
+            {
+                for (int i = 0; i < Model.Ingredient.Count(); i++)
+                {
+                    <input name="Ingredient[@i]" class="form-control mb-2" value="@Model.Ingredient[i]" placeholder="Enter ingredient name" />
+                }
+            }
+            else
+            {
+                <input name="Ingredient[0]" class="form-control mb-2" placeholder="Enter ingredient name" />
+            }
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="addIngredient()">➕ Add Ingredient</button>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Instruction</label>
+        <div id="instruction-list">
+            @if (Model.Instruction != null && Model.Instruction.Any())
+            {
+                for (int i = 0; i < Model.Instruction.Count(); i++)
+                {
+                    <input name="Instruction[@i]" class="form-control mb-2" value="@Model.Instruction[i]" placeholder="Enter instruction name" />
+                }
+            }
+            else
+            {
+                <input name="Instruction[0]" class="form-control mb-2" placeholder="Enter instruction name" />
+            }
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="addInstruction()">➕ Add Instruction</button>
+    </div>
+
+
+
     <button type="submit" class="btn btn-success">Submit Recipe</button>
 </form>
+
+@section Scripts {
+    <script>
+        function addIngredient() {
+            const index = document.querySelectorAll('#ingredient-list input').length;
+            const input = document.createElement('input');
+            input.name = `Ingredient[${index}]`;
+            input.className = 'form-control mb-2';
+            input.placeholder = 'Enter ingredient name';
+            document.getElementById('ingredient-list').appendChild(input);
+        }
+          function addInstruction() {
+            const index = document.querySelectorAll('#instruction-list input').length;
+            const input = document.createElement('input');
+            input.name = `Instruction[${index}]`;
+            input.className = 'form-control mb-2';
+            input.placeholder = 'Enter instruction name';
+            document.getElementById('instruction-list').appendChild(input);
+        }
+    </script>
+}

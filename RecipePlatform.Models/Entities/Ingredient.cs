@@ -11,7 +11,7 @@ namespace RecipePlatform.Models.Entities
     {
         public string Name { get; set; }
 
-        [ForeignKey(nameof(RecipeId))]
+      
         public virtual Recipe Recipe { get; set; } // Navigation property to the Recipe
         public int RecipeId { get; set; } // Foreign key to the Recipe
     }

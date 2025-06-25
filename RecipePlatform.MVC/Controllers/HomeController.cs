@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using RecipePlatform.BLL.Interfaces;
+using RecipePlatform.Models.Entities;
 using RecipePlatform.MVC.Models;
 
 namespace RecipePlatform.MVC.Controllers
@@ -7,15 +9,21 @@ namespace RecipePlatform.MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IRecipeService _recipeService;
+        public HomeController(ILogger<HomeController> logger, IRecipeService recipeService)
         {
             _logger = logger;
+            _recipeService = recipeService;
         }
 
-        public IActionResult Index()
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<Recipe> recipes = await _recipeService.GetAllRecipesAsync();
+            return View(recipes);
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,88 @@
+﻿@using RecipePlatform.Models.Entities.Enum
+@model RecipePlatform.Models.Entities.Recipe
+
+@{
+    ViewData["Title"] = "Recipe Details";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">@Model.Title</h2>
+                        <span class="badge @(Model.Difficulty == DifficultyLevel.Easy ? "bg-success" : Model.Difficulty == DifficultyLevel.Medium ? "bg-warning text-dark" : "bg-danger")">
+                            @Model.Difficulty
+                        </span>
+                        <p class="text-muted mt-2">@Model.Category?.Name</p>
+                    </div>
+
+                    <div class="mb-4 text-center">
+                        <img src="~/css/img/rec.png" alt="Recipe Image" class="img-fluid rounded shadow-sm" style="max-height: 300px;" />
+                    </div>
+
+                    <div class="mb-3">
+                        <h5 class="fw-semibold">Description</h5>
+                        <p>@Model.Description</p>
+                    </div>
+
+                    <div class="mb-3 d-flex justify-content-between">
+                        <div>
+                            <strong>Prep Time:</strong> @Model.PrepTimeMinutes minutes
+                        </div>
+                        <div>
+                            <strong>Cook Time:</strong> @Model.CookTimeMinutes minutes
+                        </div>
+                        <div>
+                            <strong>Servings:</strong> @Model.Servings
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Ingredients:</h5>
+                        <ul>
+                            @if (Model.Ingredients != null && Model.Ingredients.Any())
+                            {
+                                foreach (var ing in Model.Ingredients)
+                                {
+                                    <li>@ing.Name</li>
+                                }
+                            }
+                            else
+                            {
+                                <li class="text-muted">No ingredients listed.</li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="mb-3">
+                        <h5>Instructions:</h5>
+                        <ul>
+                            @if (Model.Instructions != null && Model.Instructions.Any())
+                            {
+                                foreach (var ing in Model.Instructions)
+                                {
+                                    <li>@ing.Name</li>
+                                }
+                            }
+                            else
+                            {
+                                <li class="text-muted">No instructions listed.</li>
+                            }
+                        </ul>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
+                            ← Back to Home
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

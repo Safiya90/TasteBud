@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using RecipePlatform.Models.Entities;
 using RecipePlatform.Models.Entities.Enum;
 using System.ComponentModel.DataAnnotations;
 
@@ -27,5 +28,9 @@ namespace RecipePlatform.PL.MVC.Models
         public int CategoryId { get; set; }
 
         public IEnumerable<SelectListItem>? Categories { get; set; }
+
+        public List<string> Ingredient { get; set; } = new();
+        public List<string> Instruction { get; set; } = new();
+
     }
 }
