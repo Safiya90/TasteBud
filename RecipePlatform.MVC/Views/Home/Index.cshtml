@@ -1,0 +1,121 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+<div style="background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); padding: 50px 0;">
+
+    <div class="text-center mb-4">
+        <h1 style="font-family: 'Pacifico', cursive; font-size: 60px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+            TasteBud
+        </h1>
+        <p style="color: #fff; font-size: 20px;">Discover, Create & Share Delicious Recipes</p>
+    </div>
+
+    <div class="text-center mb-5">
+        <a asp-controller="Recipe" asp-action="Add" class="btn btn-lg btn-outline-light" style="padding: 15px 30px; font-size: 20px; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s;">
+            Get Started
+        </a>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4" style="color: #333;">Discover Delicious Recipes</h2>
+    <div class="row g-4 justify-content-center">
+        @{
+            var recipes = new[]
+            {
+        new { Name = "Creamy Garlic Pasta", Image = "", Level = "Easy" },
+        new { Name = "Grilled Chicken", Image = "~/images/recipes/chicken.jpg", Level = "Medium" },
+        new { Name = "Chocolate Cake", Image = "~/images/recipes/cake.jpg", Level = "Hard" },
+        new { Name = "Caesar Salad", Image = "~/images/recipes/salad.jpg", Level = "Easy" },
+        new { Name = "Beef Steak", Image = "~/images/recipes/steak.jpg", Level = "Medium" },
+        new { Name = "Vegetable Soup", Image = "~/images/recipes/soup.jpg", Level = "Easy" }
+        };
+        }
+
+        @for (int i = 0; i < 6; i++)
+        {
+            <div class="col-md-4 col-sm-6">
+                <div class="card shadow-sm border-0" style="border-radius: 20px; overflow: hidden; background: #fff8f0; transition: transform 0.2s;">
+                    <div class="card-body text-center p-4">
+                        <!-- صورة الوصفة -->
+                        <div class="recipe-image-container" style="width: 80px; height: 80px; margin: 0 auto; border-radius: 50%; overflow: hidden; border: 3px solid #ff7f50; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                            <img src="~/css/img/rec.png"
+                                 alt="@recipes[i].Name"
+                                 style="width: 100%; height: 100%; object-fit: cover;"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                            <!-- Fallback emoji إذا لم تُحمل الصورة -->
+                            <div style="display: none; font-size: 40px; color: #ff7f50; line-height: 80px;">🍝</div>
+                        </div>
+
+                        <h5 class="mt-3 mb-2">@recipes[i].Name</h5>
+                        <span class="badge @(recipes[i].Level == "Easy" ? "bg-success" : recipes[i].Level == "Medium" ? "bg-warning text-dark" : "bg-danger") text-white">@recipes[i].Level</span>
+
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-primary btn-sm rounded-pill">View Recipe</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="py-5 bg-light text-center">
+    <h3 class="mb-4" style="color: #333;">Share Your Favorite Recipes with the Community</h3>
+    <a href="#" class="btn btn-primary btn-lg" style="border-radius: 50px; padding: 15px 30px; font-size: 18px;">Create Your Recipe</a>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4" style="color: #333;">Top-Rated Recipes</h2>
+    <div class="row g-4 justify-content-center">
+        @{
+            var topRecipes = new[]
+            {
+        new { Name = "Mushroom Risotto", Image = "~/images/recipes/risotto.jpg", Level = "Medium" },
+        new { Name = "Fish Tacos", Image = "~/images/recipes/tacos.jpg", Level = "Easy" },
+        new { Name = "Beef Stew", Image = "~/images/recipes/stew.jpg", Level = "Hard" },
+        new { Name = "Greek Salad", Image = "~/images/recipes/greek-salad.jpg", Level = "Easy" },
+        new { Name = "BBQ Ribs", Image = "~/images/recipes/ribs.jpg", Level = "Hard" },
+        new { Name = "Tomato Soup", Image = "~/images/recipes/tomato-soup.jpg", Level = "Easy" }
+        };
+        }
+
+        @for (int i = 0; i < 6; i++)
+        {
+            <div class="col-md-3 col-sm-6">
+                <div class="card shadow-sm border-0" style="border-radius: 20px; overflow: hidden; background: #fff8f0; transition: transform 0.2s;">
+                    <div class="card-body text-center p-4">
+                        <!-- صورة الوصفة -->
+                        <div class="recipe-image-container" style="width: 60px; height: 60px; margin: 0 auto; border-radius: 50%; overflow: hidden; border: 2px solid #ff7f50; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <img src="~/css/img/rec.png"
+                                 alt="@topRecipes[i].Name"
+                                 style="width: 100%; height: 100%; object-fit: cover;"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                            <!-- Fallback emoji إذا لم تُحمل الصورة -->
+                            <div style="display: none; font-size: 30px; color: #ff7f50; line-height: 60px;">🍲</div>
+                        </div>
+
+                        <h5 class="mt-3 mb-2" style="font-size: 14px;">@topRecipes[i].Name</h5>
+                        <span class="badge @(topRecipes[i].Level == "Easy" ? "bg-success" : topRecipes[i].Level == "Medium" ? "bg-warning text-dark" : "bg-danger") text-white" style="font-size: 10px;">@topRecipes[i].Level</span>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div style="background-color: #333; color: #fff; padding: 40px 20px; margin-top: 50px;">
+    <div class="container text-center">
+        <h4>Join Our Foodie Community!</h4>
+        <p>
+            Follow us on:
+            <a href="#" class="text-white mx-2">Instagram</a> |
+            <a href="#" class="text-white mx-2">Facebook</a> |
+            <a href="#" class="text-white mx-2">Twitter</a>
+        </p>
+        <p>&copy; 2025 TasteBud. All rights reserved.</p>
+    </div>
+</div>

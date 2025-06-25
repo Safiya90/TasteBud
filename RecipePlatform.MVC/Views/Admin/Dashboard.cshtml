@@ -1,0 +1,146 @@
+﻿@model RecipePlatform.PL.MVC.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2 class="mb-4">📊 Admin Dashboard</h2>
+
+<ul class="nav nav-tabs mb-3" id="dashboardTabs">
+    <li class="nav-item">
+        <a class="nav-link active" href="#" onclick="showSection('categories')">Categories</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#" onclick="showSection('recipes')">Recipes</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#" onclick="showSection('users')">Users</a>
+    </li>
+</ul>
+
+<!-- Categories Section -->
+<div id="categoriesSection" class="section">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h4>📂 Categories</h4>
+        <a href="/Category/Add" class="btn btn-sm btn-success">➕ Add Category</a>
+    </div>
+    @if (!Model.Categories.Any())
+    {
+        <div class="alert alert-warning">No categories found.</div>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Categories)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>
+                            <a href="/Category/Edit/@item.Id" class="btn btn-sm btn-warning">✏️ Edit</a>
+                            <a href="/Category/Delete/@item.Id" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this category?');">🗑 Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<!-- Recipes Section -->
+<div id="recipesSection" class="section" style="display:none">
+    <h4 class="mb-2">🍽 Recipes</h4>
+    @if (!Model.Recipes.Any())
+    {
+        <div class="alert alert-warning">No recipes found.</div>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Posted By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var recipe in Model.Recipes)
+                {
+                    <tr>
+                        <td>@recipe.Id</td>
+                        <td>@recipe.Title</td>
+                        <td>@recipe.PostedBy</td>
+                        <td>
+                            <a href="/Recipe/Delete/@recipe.Id" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this recipe?');">🗑 Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<!-- Users Section -->
+<div id="usersSection" class="section" style="display:none">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h4>👥 Users</h4>
+        <a href="/User/Add" class="btn btn-sm btn-success">➕ Add User</a>
+    </div>
+    @if (!Model.Users.Any())
+    {
+        <div class="alert alert-warning">No users found.</div>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.Email</td>
+                        <td>@user.Role</td>
+                        <td>
+                            <a href="/User/Edit/@user.Id" class="btn btn-sm btn-warning">✏️ Edit</a>
+                            <a href="/User/Delete/@user.Id" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">🗑 Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function showSection(section) {
+            document.getElementById("categoriesSection").style.display = "none";
+            document.getElementById("recipesSection").style.display = "none";
+            document.getElementById("usersSection").style.display = "none";
+
+            document.getElementById(section + "Section").style.display = "block";
+
+            const tabs = document.querySelectorAll(".nav-link");
+            tabs.forEach(tab => tab.classList.remove("active"));
+            event.target.classList.add("active");
+        }
+    </script>
+}

@@ -1,0 +1,108 @@
+﻿@model RecipePlatform.PL.MVC.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h2><i class="fas fa-utensils me-2"></i>TasteBud</h2>
+            <p>Welcome back, food lover!</p>
+        </div>
+
+        <div class="login-body">
+            <form asp-action="Login" method="post" id="loginForm">
+                <div class="form-floating">
+                    <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                    <label asp-for="Email">Email Address</label>
+                    <i class="fas fa-envelope input-icon"></i>
+                    <span asp-validation-for="Email" class="validation-error"></span>
+                </div>
+
+                <div class="form-floating">
+                    <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password" id="passwordField" />
+                    <label asp-for="Password">Password</label>
+                    <i class="fas fa-eye input-icon password-toggle" id="togglePassword"></i>
+                    <span asp-validation-for="Password" class="validation-error"></span>
+                </div>
+
+                <div class="form-check">
+                    <input asp-for="RememberMe" class="form-check-input" />
+                    <label asp-for="RememberMe" class="form-check-label">
+                        Keep me signed in
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-login">
+                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                </button>
+
+                <div class="forgot-password">
+                    <a asp-action="ForgotPassword">
+                        <i class="fas fa-key me-1"></i>Forgot your password?
+                    </a>
+                </div>
+
+                <div class="register-link">
+                    <p class="mb-0">
+                        Don't have an account?
+                        <a asp-action="Register">
+                            <i class="fas fa-user-plus me-1"></i>Create one here
+                        </a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Password visibility toggle
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordField = document.getElementById('passwordField');
+        const icon = this;
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+
+    // Form validation animation
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        const email = document.querySelector('input[name="Email"]').value;
+        const password = document.querySelector('input[name="Password"]').value;
+
+        if (!email || !password) {
+            e.preventDefault();
+            const button = document.querySelector('.btn-login');
+            button.style.animation = 'shake 0.5s ease-in-out';
+            setTimeout(() => {
+                button.style.animation = '';
+            }, 500);
+        }
+    });
+
+    // Input focus effects
+    document.querySelectorAll('.form-floating input').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'translateY(-2px)';
+            this.parentElement.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)';
+        });
+
+        input.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'translateY(0)';
+            this.parentElement.style.boxShadow = '0 4px 15px rgba(0,0,0,0.05)';
+        });
+    });
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

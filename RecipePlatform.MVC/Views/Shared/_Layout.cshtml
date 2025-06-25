@@ -1,0 +1,161 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<RecipePlatform.Models.Entities.UserManagement.ApplicationUser> SignInManager
+@inject UserManager<RecipePlatform.Models.Entities.UserManagement.ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RecipePlatform.MVC</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RecipePlatform.MVC.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+</head>
+<body>
+    <!-- قسم ال Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg modern-navbar fixed-top">
+            <div class="container">
+                <!-- Brand -->
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-utensils me-2"></i>TasteBud
+                </a>
+
+                <!-- Toggle Button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navbar Content -->
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <!-- Navigation Links -->
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-1"></i>Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-book-open me-1"></i>Browse Recipes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-info-circle me-1"></i>About
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Search Bar -->
+                    <div class="search-container me-3">
+                        <form class="d-flex" role="search">
+                            <input class="search-input" type="search" placeholder="Search delicious recipes..." aria-label="Search" />
+                            <button class="search-btn" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Authentication Buttons -->
+                    <!-- Authentication Section -->
+                    <div class="auth-buttons d-flex align-items-center gap-2">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            var currentUser = await UserManager.GetUserAsync(User);
+                            var roles = await UserManager.GetRolesAsync(currentUser);
+
+                            <span class="text-white me-2">
+                                Welcome, <strong>@currentUser.FirstName</strong>
+                            </span>
+
+                            @if (roles.Contains("Admin"))
+                            {
+                                <a class="btn btn-outline-warning" asp-controller="Admin" asp-action="Dashboard">
+                                    <i class="fas fa-tools me-1"></i>Admin Panel
+                                </a>
+                            }
+
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="btn-login" asp-controller="Account" asp-action="Login">
+                                <i class="fas fa-sign-in-alt me-1"></i>Login
+                            </a>
+                            <a class="btn-register" asp-controller="Account" asp-action="Register">
+                                <i class="fas fa-user-plus me-1"></i>Register
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content with padding for fixed navbar -->
+    <div class="container-fluid" style="padding-top: 100px;">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: linear-gradient(135deg, #333 0%, #555 100%); color: white; padding: 40px 0; margin-top: 50px;">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 style="color: #fda085; margin-bottom: 20px;">
+                        <i class="fas fa-utensils me-2"></i>TasteBud
+                    </h5>
+                    <p>
+                        &copy; 2025 - RecipePlatform.MVC -
+                        <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-white text-decoration-none">
+                            <i class="fas fa-shield-alt me-1"></i>Privacy
+                        </a>
+                    </p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-youtube fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Navbar Scroll Effect -->
+    <script>
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 50) {
+                $('.modern-navbar').addClass('scrolled');
+            } else {
+                $('.modern-navbar').removeClass('scrolled');
+            }
+        });
+
+        // Active link highlighting
+        $('.navbar-nav .nav-link').on('click', function() {
+            $('.navbar-nav .nav-link').removeClass('active');
+            $(this).addClass('active');
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
