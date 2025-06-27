@@ -4,20 +4,23 @@ Recipe Platform is a multi-layered ASP.NET Core MVC web application that allows 
 
 ## 🏗️ Architecture
 
-The project follows a **3-Tier Architecture**:
+The project follows the **N-Tier architecture**, which separates concerns into distinct layers for maintainability and scalability:
 
-- **Presentation Layer (PL)**: ASP.NET Core MVC with Bootstrap for UI.
-- **Business Logic Layer (BLL)**: Contains services like `RecipeService`, responsible for business operations.
-- **Data Access Layer (DAL)**: Manages database operations using Entity Framework Core and Generic Repositories.
+- **Presentation Layer (PL):** Handles UI and user interaction (ASP.NET Core MVC).
+- **Business Logic Layer (BLL):** Contains the core logic and services.
+- **Data Access Layer (DAL):** Manages database interactions using Entity Framework Core.
+- **Models Layer:** Defines entities and data structures used across layers.
+
+Each layer communicates with the adjacent layers only, promoting loose coupling and testability.
 
 ## 📦 Features
 
-- User authentication and registration via Identity.
-- Role-based authorization (Admin/User).
-- Add/Edit/Delete recipes with ingredients and instructions.
-- Assign categories and difficulty levels.
-- Admin dashboard for managing categories, users, and recipes.
-- Ratings system for user feedback.
+- User registration, login, and role-based authorization (Admin/User).
+- Add, update, delete, and list recipes with full details.
+- Add multiple ingredients and instructions per recipe.
+- Categorize recipes for easier browsing.
+- Display detailed recipe views with images, ingredients, instructions, and ratings.
+- Clean, responsive UI using Bootstrap.
 
 ## 🧩 Entities
 
@@ -38,9 +41,11 @@ The project follows a **3-Tier Architecture**:
 
 - ASP.NET Core MVC
 - Entity Framework Core
-- SQL Server
-- Bootstrap 5
-- Identity Framework
+- Microsoft Identity for authentication
+- SQL Server (or your preferred relational database)
+- Bootstrap 5 for responsive design
+- C#
+- Visual Studio 2022
 
 ## 🔄 Future Enhancements
 
